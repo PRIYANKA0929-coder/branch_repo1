@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Simple Calculator</title>
-</head>
-<body>
+from flask import Flask, render_template, request
 
-    <h1>Add Two Numbers</h1>
+app = Flask(__name__)
 
-    <form method="POST">
-        <input type="number" name="a" placeholder="First number">
-        <input type="number" name="b" placeholder="Second number">
-        <button type="submit">Add</button>
-    </form>
+@app.route("/", methods=["GET", "POST"])
+def home():
+    result = ""
 
-    <h2>Result: {{ result }}</h2>
+    if request.method == "POST":
+        a = int(request.form["a"])
+        b = int(request.form["b"])
+        result = a + b
 
-</body>
-</html>
+    return render_template("index.html", result=result)
+
+app.run(debug=True)
